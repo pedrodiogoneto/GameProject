@@ -22,13 +22,29 @@ function Game(mainElement) {
 
 
     //Player's movement
-    self.handleKeyDown = function (keycode) {
-        switch (keycode) {
-          case '36':
-            self.player.setDirection('UP');
-            break;
+    self.handleKeyDown = function (event) {
+       
+        var key = event.key.toLowerCase();
+        
+        switch (key) {
+            case 'w':
+                self.player.update('w');
+                break;
+            case 's':
+                self.player.update('s');
+                break;
+            case 'a':
+                self.player.update('a');
+                break;
+            case 'd':
+                self.player.update('d');
+                break;
+            case 'm':
+                self.player.jump('m');
+                break;
         }
     }
+
 
 
     document.addEventListener('keydown', self.handleKeyDown);
@@ -47,6 +63,7 @@ function Game(mainElement) {
     
     window.requestAnimationFrame(verticalMovement);
 };
+
 
 Game.prototype.destroy = function () {
     var self = this;

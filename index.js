@@ -63,7 +63,7 @@ function main() {
     window.setTimeout(function () {
       destroyGame();
       buildGameOver();
-    }, 100);
+    }, 1000000);
   }
 
   function destroyGame() {
