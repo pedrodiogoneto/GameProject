@@ -1,0 +1,36 @@
+
+/* ---- reset ---- */
+
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+}
+
+/* ---- typography ---- */
+
+body {}
+
+h1 {}
+
+h2 {}
+
+h3 {}
+
+
+
+
+/* ---- layout ---- */
+
+
+
+
+
+/* ---- components ---- */
+
+
