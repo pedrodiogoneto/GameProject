@@ -9,31 +9,43 @@ function Chicken(ctx, width, height, gravity) {
 
     self.gameWidth = width;
     self.gameHeight = height;
+    self.throwing = false;
 
+    self.baselineY = self.gameHeight - self.size;
     self.positionX = self.gameWidth / 10;
-    self.positionY = self.gameHeight - self.size;
+    self.positionY = self.baselineY;
 
-    self.velocityX = 10;
-    self.velocityY = -10; 
+    self.velocityX = 15;
+    self.velocityY = -15; 
+
+    self.angle = 0.7; //radianos (0 a pi)!
+
+    self.velocityXAngle = self.velocityX * Math.cos(self.angle);
+    self.velocityYAngle = self.velocityY * Math.sin(self.angle);
     
     self.acceleration = gravity;
 }
 
-Chicken.prototype.update = function(key) {
+Chicken.prototype.throw = function() {
+    var self = this; 
+
+    self.throwing = true;
+};
+
+Chicken.prototype.update = function() {
     var self = this;
 
-    if (key === 'h') {
-            setInterval(function(){
-                if (self.positionY < self.gameHeight - self.size/2) { 
-                    self.velocityY = self.velocityY + self.acceleration;
-                    self.positionX = self.positionX + self.velocityX;
-                    self.positionY = self.positionY + self.velocityY;
-                    console.log(self.positionX, self.positionY);
-                    self.draw();
-                } else {
-                    self.positionY = self.positionY;
-                }
-            }, 20);
+    if (self.throwing) {
+     
+        if (self.positionY <= self.baselineY) { 
+            self.velocityYAngle = self.velocityYAngle + self.acceleration;
+            self.positionX = self.positionX + self.velocityXAngle;
+            self.positionY = self.positionY + self.velocityYAngle;
+            console.log(self.positionX, self.positionY);
+        } else {
+            self.throwing = false;
+            self.positionY = self.positionY;
+        }
     }
 }
 

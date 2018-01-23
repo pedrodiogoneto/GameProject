@@ -29,6 +29,11 @@ h3 {}
 
 
 
+html, 
+body {
+  height: 100%;
+  overflow: hidden;
+}
 
 
 /* ---- components ---- */

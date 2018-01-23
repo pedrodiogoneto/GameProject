@@ -44,7 +44,7 @@ function Game(mainElement) {
             //     self.player.jump('m');
             //     break;
             case 'h':
-                self.chicken.update('h');
+                self.chicken.throw();
                 break;
         }
     }
