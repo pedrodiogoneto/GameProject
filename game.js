@@ -10,6 +10,8 @@ function Game(mainElement) {
     self.width = window.innerWidth;
     self.height = window.innerHeight;
 
+    self.gravity = 0.15;
+
     // create dom elements'
     self.canvasElement = document.createElement('canvas');
     self.canvasElement.width = self.width;
@@ -18,52 +20,50 @@ function Game(mainElement) {
 
     self.ctx = self.canvasElement.getContext('2d');
 
-    self.player = new Player(self.ctx, self.width, self.height);
+    self.chicken = new Chicken(self.ctx, self.width, self.height, self.gravity);
 
-
-    //Player's movement
+    //Chickes's movement commands
     self.handleKeyDown = function (event) {
        
         var key = event.key.toLowerCase();
         
         switch (key) {
-            case 'w':
-                self.player.update('w');
-                break;
-            case 's':
-                self.player.update('s');
-                break;
-            case 'a':
-                self.player.update('a');
-                break;
-            case 'd':
-                self.player.update('d');
-                break;
-            case 'm':
-                self.player.jump('m');
+            // case 'w':
+            //     self.player.update('w');
+            //     break;
+            // case 's':
+            //     self.player.update('s');
+            //     break;
+            // case 'a':
+            //     self.player.update('a');
+            //     break;
+            // case 'd':
+            //     self.player.update('d');
+            //     break;
+            // case 'm':
+            //     self.player.jump('m');
+            //     break;
+            case 'h':
+                self.chicken.update('h');
                 break;
         }
     }
-
-
 
     document.addEventListener('keydown', self.handleKeyDown);
 
-    function verticalMovement () {
-        self.player.update();
+    function chickenMovement () {
+        self.chicken.update();
 
         self.ctx.clearRect(0, 0, self.width, self.height);
-        self.player.draw();
+        self.chicken.draw();
         self.ctx.fillStyle = 'black';
        
         if (!self.finished) {
-            window.requestAnimationFrame(verticalMovement);
+            window.requestAnimationFrame(chickenMovement);
         }
     }
-    
-    window.requestAnimationFrame(verticalMovement);
-};
-
+    window.requestAnimationFrame(chickenMovement);
+}
 
 Game.prototype.destroy = function () {
     var self = this;
@@ -73,4 +73,4 @@ Game.prototype.destroy = function () {
     self.canvasElement.remove();
   
     document.removeEventListener('keydown', self.handleKeyDown);
-  };
+};
