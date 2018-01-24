@@ -117,7 +117,7 @@ function main() {
     gameOverElement.remove();
   }
 
-    buildGame();
+  buildSplash();
 }
 
 
