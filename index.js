@@ -60,6 +60,12 @@ function main() {
     gameStage = 'game';
     game = new Game(mainElement);
 
+
+    // game.onGameOver(function () {
+    //   destroyGame();
+    //   buildGameOver();
+    // });
+
     window.setTimeout(function () {
       destroyGame();
       buildGameOver();

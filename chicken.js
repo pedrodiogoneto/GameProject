@@ -9,7 +9,9 @@ function Chicken(ctx, width, height, gravity) {
 
     self.gameWidth = width;
     self.gameHeight = height;
-    self.throwing = false;
+
+    //status: previous -> air -> finished
+    self.status = 'previous'
 
     self.baselineY = self.gameHeight - self.size;
     self.positionX = self.gameWidth / 10;
@@ -21,18 +23,19 @@ function Chicken(ctx, width, height, gravity) {
     self.angle = 0.7; //radianos (0 a pi)!
     
     self.acceleration = gravity;
+ 
 }
 
 Chicken.prototype.throw = function() {
     var self = this; 
 
-    self.throwing = true;
+    self.status = 'air';
 };
 
 Chicken.prototype.update = function() {
     var self = this;
 
-    if (self.throwing) {
+    if (self.status === 'air') {
      
         if (self.positionY <= self.baselineY) { 
             self.velocityYAngle = self.velocityYAngle + self.acceleration;
@@ -40,7 +43,7 @@ Chicken.prototype.update = function() {
             self.positionY = self.positionY + self.velocityYAngle;
             console.log(self.positionX, self.positionY);
         } else {
-            self.throwing = false;
+            self.status = 'finished';
             self.positionY = self.positionY;
         }
     }
@@ -100,10 +103,12 @@ Chicken.prototype.draw = function () {
     self.ctx.fillRect(self.positionX - self.size/2, self.positionY - self.size/2, self.size, self.size)
 }
 
+//self.ctx.fillRect(self.positionX - self.size/2, self.positionY - self.size/2, self.size, self.size)
+
 Chicken.prototype.drawThrowLine = function (angle, velocityX, velocityY, ctx) {
     var self = this;
 
-    if (self.throwing === false) {
+    if (self.status === 'previous') {
         self.ctx.beginPath(); 
         self.ctx.lineWidth="5";
         self.ctx.strokeStyle="black"; 

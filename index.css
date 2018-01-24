@@ -35,6 +35,10 @@ body {
   overflow: hidden;
 }
 
+#canvasElement {
+  background-image: url("./img/background.jpg");
+}
+
 
 /* ---- components ---- */
 
