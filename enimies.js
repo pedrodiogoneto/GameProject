@@ -10,10 +10,15 @@ function Enemy (ctx, width, height) {
     self.gameWidth = width;
     self.gameHeight = height;
 
-    self.positionX = self.gameWidth*0.8;
-    self.positionY = self.gameWidth*0.3;
+    self.positionX = self.gameWidth * getRandomNum(0.6,0.9);
+    self.positionY = self.gameWidth * getRandomNum(0.1,0.5);
 }
 
+function getRandomNum(min, max) {
+    // min = Math.ceil(min);
+    // max = Math.floor(max);
+    return (Math.random() * (max - min)) + min;
+}
 
 Enemy.prototype.draw = function () {
     var self = this;
@@ -21,5 +26,3 @@ Enemy.prototype.draw = function () {
     self.ctx.fillStyle = 'black';
     self.ctx.fillRect(self.positionX, self.positionY, self.size, self.size)
 }
-
-// self.ctx.fillRect(self.positionX - self.size, self.positionY - self.size, self.size, self.size)
