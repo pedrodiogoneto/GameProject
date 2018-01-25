@@ -1,6 +1,9 @@
 'use strict';
 
-function Chicken(ctx, width, height, gravity) {
+var MAGIC_NUMBER = 10;
+var RANDOMNESS = 10;
+
+function Chicken(ctx, width, height, gravity, chickeEnemyCollision) {
     var self = this;
 
     self.size = 50;
@@ -21,15 +24,20 @@ function Chicken(ctx, width, height, gravity) {
     self.velocityY = -15; 
     
     self.angle = 0.5; //radianos (0 a pi)!
+
+    self.updateVelocityByAngle();
     
     self.acceleration = gravity;
- 
+
+    self.chickeEnemyCollision = false;
+    self.thrownAt = null;
 }
 
 Chicken.prototype.throw = function() {
     var self = this; 
 
     self.status = 'air';
+    self.thrownAt = Date.now();
 };
 
 Chicken.prototype.update = function() {
@@ -49,7 +57,7 @@ Chicken.prototype.update = function() {
     }
 }
 
-Chicken.prototype.updateVelocityByAngle = function (angle, velocityX, velocityY) {
+Chicken.prototype.updateVelocityByAngle = function () {
     var self = this;
     self.velocityXAngle = self.velocityX * Math.cos(self.angle);
     self.velocityYAngle = self.velocityY * Math.sin(self.angle);
@@ -59,7 +67,7 @@ Chicken.prototype.trowingAngleHigher = function() {
     var self = this;
 
     self.angle += 0.1;
-    self.updateVelocityByAngle(self.angle, self.velocityX,self.velocityY)
+    self.updateVelocityByAngle();
 
     console.log('New Angle: ' + self.angle);
 }
@@ -68,7 +76,7 @@ Chicken.prototype.trowingAngleLower = function() {
     var self = this;
 
     self.angle -= 0.1;
-    self.updateVelocityByAngle(self.angle, self.velocityX,self.velocityY)
+    self.updateVelocityByAngle();
     
     console.log('New Angle: ' + self.angle);
 }
@@ -78,7 +86,7 @@ Chicken.prototype.trowingVelocityHigher = function() {
 
     self.velocityX += 1; 
     self.velocityY -= 1; 
-    self.updateVelocityByAngle(self.angle, self.velocityX,self.velocityY)
+    self.updateVelocityByAngle();
     
     console.log('New X velocity: ' + self.velocityX);
     console.log('New Y velocity: ' + self.velocityY);
@@ -90,7 +98,7 @@ Chicken.prototype.trowingVelocityLower = function() {
 
     self.velocityX -= 1; 
     self.velocityY += 1; 
-    self.updateVelocityByAngle(self.angle, self.velocityX,self.velocityY)
+    self.updateVelocityByAngle();
     
     console.log('New X velocity: ' + self.velocityX);
     console.log('New Y velocity: ' + self.velocityY);
@@ -98,16 +106,6 @@ Chicken.prototype.trowingVelocityLower = function() {
 
 Chicken.prototype.draw = function () {
     var self = this;
-
-    self.ctx.fillStyle = 'black';
-    self.ctx.fillRect(self.positionX, self.positionY, self.size, self.size)
-}
-
-//self.ctx.fillRect(self.positionX - self.size/2, self.positionY - self.size/2, self.size, self.size)
-
-Chicken.prototype.drawThrowLine = function (angle, velocityX, velocityY, ctx) {
-    var self = this;
-
     if (self.status === 'previous') {
         self.ctx.beginPath(); 
         self.ctx.lineWidth="5";
@@ -115,9 +113,28 @@ Chicken.prototype.drawThrowLine = function (angle, velocityX, velocityY, ctx) {
         self.ctx.moveTo(self.positionX + self.size/2, self.positionY + self.size/2);
         self.ctx.lineTo(self.positionX + (self.velocityX * Math.cos(self.angle))*10 , self.positionY - (self.velocityY * Math.sin(self.angle))*(-1)*10);
         self.ctx.stroke(); 
-    } else {
-        self.ctx.clearRect(self.positionX + self.size/2, self.positionY + self.size/2, self.positionX + (self.velocityX * Math.cos(self.angle))*10, self.positionY - (self.velocityY * Math.sin(self.angle))*(-1)*10);
     }
+    else if (self.status === 'air') {
+        var delta = Date.now() - self.thrownAt;
+        var upTo = MAGIC_NUMBER * delta/ 500;
+        for (var ix = 0; ix < upTo; ix++) {
+            var scaleUp = ix / upTo;
+            var scaleDown = 1 - scaleUp;
+            var red = Math.round(scaleDown * 255); 
+            var green = Math.round(scaleUp * 255);
+            var blue = Math.round(scaleUp * 255);
+            var alpha = scaleDown;
+            var color = 'rgba(' + red + ',' + green + ',' + blue + ',' + alpha + ')';
+            self.ctx.fillStyle = color;
+            var size = self.size * scaleDown;
+            var x = self.positionX - self.velocityXAngle * ix + Math.random() * RANDOMNESS - RANDOMNESS/2;
+            var y = self.positionY - self.velocityYAngle * ix + Math.random() * RANDOMNESS - RANDOMNESS/2;
+            self.ctx.fillRect(x, y, size, size);
+        }
+    }
+
+    self.ctx.fillStyle = 'black';
+    self.ctx.fillRect(self.positionX, self.positionY, self.size, self.size);
 }
 
 
