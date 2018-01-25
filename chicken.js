@@ -20,7 +20,7 @@ function Chicken(ctx, width, height, gravity) {
     self.velocityX = 15;
     self.velocityY = -15; 
     
-    self.angle = 0.7; //radianos (0 a pi)!
+    self.angle = 0.5; //radianos (0 a pi)!
     
     self.acceleration = gravity;
  
@@ -100,7 +100,7 @@ Chicken.prototype.draw = function () {
     var self = this;
 
     self.ctx.fillStyle = 'black';
-    self.ctx.fillRect(self.positionX - self.size/2, self.positionY - self.size/2, self.size, self.size)
+    self.ctx.fillRect(self.positionX, self.positionY, self.size, self.size)
 }
 
 //self.ctx.fillRect(self.positionX - self.size/2, self.positionY - self.size/2, self.size, self.size)
@@ -112,11 +112,11 @@ Chicken.prototype.drawThrowLine = function (angle, velocityX, velocityY, ctx) {
         self.ctx.beginPath(); 
         self.ctx.lineWidth="5";
         self.ctx.strokeStyle="black"; 
-        self.ctx.moveTo(self.positionX, self.positionY);
+        self.ctx.moveTo(self.positionX + self.size/2, self.positionY + self.size/2);
         self.ctx.lineTo(self.positionX + (self.velocityX * Math.cos(self.angle))*10 , self.positionY - (self.velocityY * Math.sin(self.angle))*(-1)*10);
         self.ctx.stroke(); 
     } else {
-        self.ctx.clearRect(self.positionX, self.positionY, self.positionX + (self.velocityX * Math.cos(self.angle))*10, self.positionY - (self.velocityY * Math.sin(self.angle))*(-1)*10);
+        self.ctx.clearRect(self.positionX + self.size/2, self.positionY + self.size/2, self.positionX + (self.velocityX * Math.cos(self.angle))*10, self.positionY - (self.velocityY * Math.sin(self.angle))*(-1)*10);
     }
 }
 

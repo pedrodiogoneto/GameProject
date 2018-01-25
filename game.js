@@ -65,61 +65,44 @@ function Game(mainElement) {
         self.chicken.draw();
         self.chicken.drawThrowLine ();
         self.drawEnemies();
-        
+        self.checkIfCollision();
+
         if (!self.finished) {
             window.requestAnimationFrame(doFrame);
         }
         
-        for (var i=0;i<self.numberEnemies;i++) {
-
-            var cPosXd = self.chicken.positionX + self.chicken.size/2;
-            var cPosXe = self.chicken.positionX - self.chicken.size/2;
-            var cPosYc = self.chicken.positionY - self.chicken.size/2;
-            var cPosYb = self.chicken.positionY + self.chicken.size/2;
-            var ePosXd = self.enemies[i].positionX + self.enemies[i].size;
-            var ePosXe = self.enemies[i].positionX;
-            var ePosYc = self.enemies[i].positionY;
-            var ePosYb = self.enemies[i].positionY + self.enemies[i].size;
-        
-            var collisionCondition1 = ((cPosXd > ePosXe && cPosXd < ePosXd) && ((cPosYc > ePosYb && cPosYc < ePosYc) || (cPosYb > ePosYb && cPosYb < ePosYc)));
-            var collisionCondition2 = ((cPosXe > ePosXe && cPosXe < ePosXd) && ((cPosYc > ePosYb && cPosYc < ePosYc) || (cPosYb > ePosYb && cPosYb < ePosYc)));
-            
-            if (self.chicken.status === 'air'){
-                if (collisionCondition1 || collisionCondition2) {
-                    console.log('its fucking colliding in the X axis bro!!!');
-                    self.chicken.status = 'finished';
-                } else {
-                console.log('at least its logging')
-                }   
-            }
-         }
-                
-
-
-
-
-        //     // Detect Collision
-        //     if (self.chicken.status === 'air'){
-        //         if ((cPosXd >=  ePosXe && cPosXe < ePosXe) && (cPosYc >= ePosYb && cPosYb <= ePosYb)) {
-        //             console.log('its fucking colliding in the X axis bro!!!');
-        //             self.chicken.status = 'finished';
-        //         } else {
-        //         console.log('at least its logging')
-        //         }   
-        //     }
-        //  }
-        
-         // if (self.chicken.status === 'air'){
-        //     if (self.chicken.positionX + self.chicken.size/2 >=  self.enemies.positionX && self.chicken.positionY - self.chicken.size/2 <= self.enemies.positionY) {
-        //         console.log('its fucking colliding in the X axis bro!!!');
-        //         self.chicken.throwing = false;
-        //     } else {
-        //         console.log('at least its logging')
-        //     }
-        
-        //  }
     }
     window.requestAnimationFrame(doFrame);
+
+}
+
+
+Game.prototype.checkIfCollision = function () {
+    var self = this;   
+
+    for (var i=0;i<self.numberEnemies;i++) {
+    
+        var cPosXd = self.chicken.positionX + self.chicken.size;
+        var cPosXe = self.chicken.positionX;
+        var cPosYc = self.chicken.positionY;
+        var cPosYb = self.chicken.positionY + self.chicken.size;
+        var ePosXd = self.enemies[i].positionX + self.enemies[i].size;
+        var ePosXe = self.enemies[i].positionX;
+        var ePosYc = self.enemies[i].positionY;
+        var ePosYb = self.enemies[i].positionY + self.enemies[i].size;
+    
+        var collisionCondition1 = ((cPosXd > ePosXe && cPosXd < ePosXd) && ((cPosYc < ePosYb && cPosYc > ePosYc) || (cPosYb < ePosYb && cPosYb > ePosYc)));
+        var collisionCondition2 = ((cPosXe > ePosXe && cPosXe < ePosXd) && ((cPosYc < ePosYb && cPosYc > ePosYc) || (cPosYb < ePosYb && cPosYb > ePosYc)));
+        
+        if (self.chicken.status === 'air'){
+            if (collisionCondition1 || collisionCondition2) {
+                console.log('its fucking colliding in the X axis bro!!!');
+                self.chicken.status = 'finished';
+            } else {
+                console.log('at least its logging')
+            }   
+        }
+}
 }
 
 Game.prototype.drawEnemies = function () {
