@@ -61,10 +61,10 @@ function main() {
     game = new Game(mainElement);
 
 
-    // game.onGameOver(function () {
-    //   destroyGame();
-    //   buildGameOver();
-    // });
+    game.onGameOver(function () {
+      destroyGame();
+      buildGameOver();
+    });
 
     window.setTimeout(function () {
       destroyGame();
@@ -122,6 +122,37 @@ function main() {
     // remove gameOver from dom
     gameOverElement.remove();
   }
+
+  function buildGameWin() {
+    gameStage = 'gameWin';
+
+    // create dom elements
+    gameOverElement = document.createElement('div');
+    gameOverElement.setAttribute('id', 'game-win');
+
+    var title = document.createElement('h1');
+    title.innerText = 'WINNER!!! Congratulations!!!';
+    gameOverElement.appendChild(title);
+
+    var userScore = document.createElement('h2');
+    userScore.innerText = playerName + ' Score: ' + game.score;
+    gameOverElement.appendChild(userScore);
+
+    playAgainButton = document.createElement('button');
+    playAgainButton.innerText = 'PLAY AGAIN';
+    gameOverElement.appendChild(playAgainButton);
+
+    donateButton = document.createElement('button');
+    donateButton.innerText = 'DONATE';
+    gameOverElement.appendChild(donateButton);
+
+    // apppend to site-main
+    mainElement.appendChild(gameOverElement);
+
+    // bind click on start play button
+    playAgainButton.addEventListener('click', handlePlayAgainClick);
+  }
+
 
   buildSplash();
 }

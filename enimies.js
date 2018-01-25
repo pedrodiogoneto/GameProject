@@ -18,6 +18,7 @@ function Enemy (ctx, width, height) {
     self.done = false;
     self.collided = false;
     self.collidedAt = null;
+    self.numberEnemiesCollided = null;
 }
 
 function getRandomNum(min, max) {
@@ -45,8 +46,7 @@ Enemy.prototype.draw = function () {
         if (scaleUp > TIME_TO_DISAPEAR_AFTER_COLLISION) {
             self.done = true;
         }
-
-
+        
     }
     else {    
         self.ctx.fillStyle = 'black';

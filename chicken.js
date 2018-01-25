@@ -138,4 +138,10 @@ Chicken.prototype.draw = function () {
 }
 
 
+Chicken.prototype.setChickeEnemyCollision = function () {
+    var self = this;
+    self.chickeEnemyCollision = false;
+}
+
+
 

@@ -11,11 +11,14 @@ function Game(mainElement) {
     self.height = window.innerHeight;
     self.gravity = 0.15;
 
-    self.numberEnemies = 3;
+    self.numberEnemies = 1;
     self.enemies = []
+    self.numberEnemiesCollided = [];
 
     self.chickenLives = 5;
     self.chickeEnemyCollision = false;
+
+    self.onEnded;
 
     // create dom elements'
     self.canvasElement = document.createElement('canvas');
@@ -69,7 +72,7 @@ function Game(mainElement) {
         self.checkIfCollision();
         self.purgeEnemies();
 
-        self.resultOfTrow();
+        // self.resultOfTrow();
 
 
         if (!self.finished) {
@@ -110,6 +113,8 @@ Game.prototype.checkIfCollision = function () {
                 self.chicken.chickeEnemyCollision = true;
                 self.enemyIndexCollided = i;
                 self.enemies[i].setCollided();
+                self.resultOfTrow();
+
             } else {
                 console.log('at least its logging')
             }
@@ -123,15 +128,15 @@ Game.prototype.purgeEnemies = function () {
     self.enemies = self.enemies.filter(function (enemy) {
         return !enemy.done;
     });
-};
+};  
 
 Game.prototype.resultOfTrow = function () {
     var self = this;
+    self.updateNumberEnemiesCollided();
 
-    if (self.chicken.status === 'finished' && self.chickeEnemyCollision === true && self.chickenLives > 0 && self.enemies.length < 1) {
-        setTimeout(self.main.buildSplash(),1000);
+    if (self.chicken.status === 'finished' && self.chickenLives > 0 && (self.numberEnemiesCollided.length === self.enemies.length)) {
+        self.onEnded();
     } else if (self.chicken.status === 'finished' && self.chickeEnemyCollision === true && self.chickenLives > 0 && self.enemies.length >= 1) {
-        self.enemies.splice(self.enemyIndexCollided);
         self.chickenLives -= 1;
         setTimeout(function(){self.chicken = new Chicken(self.ctx, self.width, self.height, self.gravity, self.chickeEnemyCollision)},1000);
     } else if (self.chicken.status === 'finished' && self.chickeEnemyCollision === false && self.chickenLives > 0 && self.enemies.length >= 1) {
@@ -157,8 +162,20 @@ Game.prototype.destroy = function () {
     document.removeEventListener('keydown', self.handleKeyDown);
 };
 
-// Game.propotype.onGameOver = function (callback) {
-//     var self = this;
+Game.prototype.onGameOver = function (callback) {
+    var self = this;
 
-//     self.onEnded = callback;
-// };
+    self.onEnded = callback;
+};
+
+Game.prototype.updateNumberEnemiesCollided = function () {
+    var self = this;
+
+    for (var i=0;i<self.enemies.length;i++) {
+        if (self.enemies[i].collided) {
+            if (self.numberEnemiesCollided.indexOf(i)<0) {
+                self.numberEnemiesCollided.push(i);
+            }
+        }
+    }
+};
