@@ -11,7 +11,7 @@ function Game(mainElement) {
     self.height = window.innerHeight;
     self.gravity = 0.15;
 
-    self.numberEnemies = 1;
+    self.numberEnemies = 2;
     self.enemies = []
     self.numberEnemiesCollided = [];
 
@@ -19,6 +19,7 @@ function Game(mainElement) {
     self.chickeEnemyCollision = false;
 
     self.onEnded;
+    self.onWinned;
 
     // create dom elements'
     self.canvasElement = document.createElement('canvas');
@@ -102,10 +103,12 @@ Game.prototype.checkIfCollision = function () {
         var ePosXe = self.enemies[i].positionX;
         var ePosYc = self.enemies[i].positionY;
         var ePosYb = self.enemies[i].positionY + self.enemies[i].size;
+        var floor = self.height;
     
         var collisionCondition1 = ((cPosXd > ePosXe && cPosXd < ePosXd) && ((cPosYc < ePosYb && cPosYc > ePosYc) || (cPosYb < ePosYb && cPosYb > ePosYc)));
         var collisionCondition2 = ((cPosXe > ePosXe && cPosXe < ePosXd) && ((cPosYc < ePosYb && cPosYc > ePosYc) || (cPosYb < ePosYb && cPosYb > ePosYc)));
-        
+        var collisionCondition3 = cPosYb > (floor-1);
+
         if (self.chicken.status === 'air'){
             if (collisionCondition1 || collisionCondition2) {
                 console.log('its fucking colliding in the X axis bro!!!');
@@ -113,6 +116,12 @@ Game.prototype.checkIfCollision = function () {
                 self.chicken.chickeEnemyCollision = true;
                 self.enemyIndexCollided = i;
                 self.enemies[i].setCollided();
+                self.resultOfTrow();
+
+            } else if (collisionCondition3) {
+                console.log('its fucking colliding with the flooor bro!!!');
+                self.chicken.status = 'finished';
+                self.chicken.chickeEnemyCollision = false;
                 self.resultOfTrow();
 
             } else {
@@ -135,13 +144,13 @@ Game.prototype.resultOfTrow = function () {
     self.updateNumberEnemiesCollided();
 
     if (self.chicken.status === 'finished' && self.chickenLives > 0 && (self.numberEnemiesCollided.length === self.enemies.length)) {
+        self.onWinned();
+    } else if (self.chicken.status === 'finished' && self.chickenLives > 0 && self.numberEnemiesCollided.length < self.enemies.length) {
+        self.chickenLives -= 1;
+        setTimeout(function(){self.chicken = new Chicken(self.ctx, self.width, self.height, self.gravity, self.chickeEnemyCollision)},1000);
+    } else if (self.chicken.status === 'finished' && self.chickenLives < 1 && self.numberEnemiesCollided.length < self.enemies.length) {
+        self.chickenLives -= 1;
         self.onEnded();
-    } else if (self.chicken.status === 'finished' && self.chickeEnemyCollision === true && self.chickenLives > 0 && self.enemies.length >= 1) {
-        self.chickenLives -= 1;
-        setTimeout(function(){self.chicken = new Chicken(self.ctx, self.width, self.height, self.gravity, self.chickeEnemyCollision)},1000);
-    } else if (self.chicken.status === 'finished' && self.chickeEnemyCollision === false && self.chickenLives > 0 && self.enemies.length >= 1) {
-        self.chickenLives -= 1;
-        setTimeout(function(){self.chicken = new Chicken(self.ctx, self.width, self.height, self.gravity, self.chickeEnemyCollision)},1000);
     }
 }
 
@@ -166,6 +175,12 @@ Game.prototype.onGameOver = function (callback) {
     var self = this;
 
     self.onEnded = callback;
+};
+
+Game.prototype.onGameWin = function (callback) {
+    var self = this;
+
+    self.onWinned = callback;
 };
 
 Game.prototype.updateNumberEnemiesCollided = function () {
