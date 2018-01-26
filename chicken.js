@@ -106,10 +106,12 @@ Chicken.prototype.trowingVelocityLower = function() {
 
 Chicken.prototype.draw = function () {
     var self = this;
+    // powerLineColor();
+
     if (self.status === 'previous') {
         self.ctx.beginPath(); 
         self.ctx.lineWidth="5";
-        self.ctx.strokeStyle="black"; 
+        self.ctx.strokeStyle = 'black'; 
         self.ctx.moveTo(self.positionX + self.size/2, self.positionY + self.size/2);
         self.ctx.lineTo(self.positionX + (self.velocityX * Math.cos(self.angle))*5 , self.positionY - (self.velocityY * Math.sin(self.angle))*(-1)*5);
         self.ctx.stroke(); 
@@ -139,6 +141,39 @@ Chicken.prototype.draw = function () {
     // //auxiliar black square draw
     // self.ctx.fillStyle = 'black';
     // self.ctx.fillRect(self.positionX, self.positionY, self.size, self.size);
+
+    // function powerLineColor () {
+    //     var self = this;
+    //     self.valueX = self.positionX + (self.velocityX * Math.cos(self.angle))*5;
+    //     self.valueY = self.positionY - (self.velocityY * Math.sin(self.angle))*(-1)*5;
+
+    //     switch (true) {
+            
+    //         case valueX >= 15 && valueX < 20:
+    //             powerColor = "green"
+    //             break;
+    //         case valueX >= 20 && valueX < 25:
+    //             powerColor = "yellow"
+    //             break;
+    //         case valueX >= 25:
+    //             powerColor = "red"
+    //             break;
+    //     }
+
+        // switch (true) {
+            
+        //     case valueY <= -15 && valueX > -20:
+        //         powerColor = "green"
+        //         break;
+        //     case valueY <= -20 && valueX > -25:
+        //         powerColor = "yellow"
+        //         break;
+        //     case valueY <= -25:
+        //         powerColor = "red"
+        //         break;
+        // }
+
+    // };
 }
 
 

@@ -28,6 +28,10 @@ function Game(mainElement) {
     self.canvasElement.setAttribute('id', 'canvasElement');
     mainElement.appendChild(self.canvasElement);
     
+    self.gameMusic = document.createElement('audio');
+    self.gameMusic.setAttribute('src', './audio/backmusic.mp3');
+    self.gameMusic.setAttribute('autoplay','true');
+    self.canvasElement.appendChild(self.gameMusic);
 
     self.ctx = self.canvasElement.getContext('2d');
 

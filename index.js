@@ -38,6 +38,14 @@ function main() {
     containerButton.setAttribute('id', 'containerButton');
     containerExt.appendChild(containerButton);
 
+    // var containerinstructions = document.createElement('div');
+    // containerinstructions.setAttribute('id', 'containerinstructions');
+    // containerExt.appendChild(containerinstructions);
+
+    // controlsWASD = document.createElement('img');
+    // controlsWASD.setAttribute('src', "./img/wasd.png");
+    // containerinstructions.appendChild(controlsWASD);
+
     var title = document.createElement('h1');
     title.setAttribute('id', 'title');
     title.innerText = 'CHICKEN VENDETTA';
@@ -80,7 +88,6 @@ function main() {
     gameStage = 'game';
     // gameLevel = null;
     game = new Game(mainElement);
-
 
     game.onGameOver(function () {
       destroyGame();
@@ -160,9 +167,13 @@ function main() {
       playAgainButton.addEventListener('click', handlePlayAgainClick);
     
 
-    //   // bind click on donate button
-    //   donateButton.addEventListener('click', handleDonateClick);
-     }
+      //   // bind click on donate button
+      //   donateButton.addEventListener('click', handleDonateClick);
+      
+
+
+  
+  }
 
     function destroyGameOver() {
       // unbind click on start play button
