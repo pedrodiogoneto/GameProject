@@ -6,7 +6,7 @@ var RANDOMNESS = 10;
 function Chicken(ctx, width, height, gravity, chickeEnemyCollision) {
     var self = this;
 
-    self.size = 50;
+    self.size = 60;
 
     self.ctx = ctx;
 

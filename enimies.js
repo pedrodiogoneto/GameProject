@@ -5,7 +5,7 @@ var TIME_TO_DISAPEAR_AFTER_COLLISION = 1500;
 function Enemy (ctx, width, height) {
     var self = this;
 
-    self.size = 100;
+    self.size = 150;
 
     self.ctx = ctx;
 
@@ -48,8 +48,12 @@ Enemy.prototype.draw = function () {
         }
         
     }
-    else {    
-        self.ctx.fillStyle = 'black';
-        self.ctx.fillRect(self.positionX, self.positionY, self.size, self.size);
+    else {
+        self.image = new Image();
+        self.image.src = './img/peter.png';
+        self.ctx.drawImage(self.image, self.positionX, self.positionY, self.size, self.size);
+        
+        // self.ctx.fillStyle = 'black';
+        // self.ctx.fillRect(self.positionX, self.positionY, self.size, self.size);
     }
 }
