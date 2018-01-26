@@ -118,42 +118,57 @@ function main() {
 
       // create dom elements
       gameOverElement = document.createElement('div');
-      gameOverElement.setAttribute('id', 'game-over');
+      // gameWinElement.setAttribute('id', 'game-over');
+      gameOverElement.setAttribute('id', 'splash');
+
+      var containerExt = document.createElement('div');
+      containerExt.setAttribute('id', 'containerExt');
+      gameOverElement.appendChild(containerExt);
+
+      var containerTitle = document.createElement('div');
+      containerTitle.setAttribute('id', 'containerTitle');
+      containerExt.appendChild(containerTitle);
+
+      var containerButton = document.createElement('div');
+      containerButton.setAttribute('id', 'containerButton');
+      containerExt.appendChild(containerButton);
 
       var title = document.createElement('h1');
       title.innerText = 'GAME OVER LOSER';
-      gameOverElement.appendChild(title);
+      containerTitle.appendChild(title);
+      title.setAttribute('id','title');
 
-      var userScore = document.createElement('h2');
-      userScore.innerText = playerName + ' Score: ' + game.score;
-      gameOverElement.appendChild(userScore);
+
+      // var userScore = document.createElement('h2');
+      // userScore.innerText = playerName + ' Score: ' + game.score;
+      // gameOverElement.appendChild(userScore);
 
       playAgainButton = document.createElement('button');
       playAgainButton.innerText = 'PLAY AGAIN';
-      gameOverElement.appendChild(playAgainButton);
-
+      containerButton.appendChild(playAgainButton);
+      playAgainButton.setAttribute('id','startGameButton');
 
       donateButton = document.createElement('button');
       donateButton.innerText = 'DONATE';
-      donateButton.setAttribute('class', 'btn');
-      gameOverElement.appendChild(donateButton);
+      donateButton.setAttribute('id','startGameButton');
+      containerButton.appendChild(donateButton);
 
       // apppend to site-main
-      mainElement.appendChild(gameOverElement);s
+      mainElement.appendChild(gameOverElement);
 
       // bind click on start play button
       playAgainButton.addEventListener('click', handlePlayAgainClick);
     
 
-      // bind click on donate button
-      donateButton.addEventListener('click', handleDonateClick);
-    }
+    //   // bind click on donate button
+    //   donateButton.addEventListener('click', handleDonateClick);
+     }
 
     function destroyGameOver() {
       // unbind click on start play button
       playAgainButton.removeEventListener('click', handlePlayAgainClick);
-      // unbind click on donate button
-      donateButton.removeEventListener('click', handleDonateClick);
+      // // unbind click on donate button
+      // donateButton.removeEventListener('click', handleDonateClick);
       // remove gameOver from dom
       gameOverElement.remove();
     }

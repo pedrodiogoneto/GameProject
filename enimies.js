@@ -35,13 +35,15 @@ Enemy.prototype.setCollided = function () {
 
 Enemy.prototype.draw = function () {
     var self = this;
+    self.image = new Image();
+    self.image.src = './img/peter.png';
 
     if (self.collided) {
 
         var scaleUp = (Date.now() - self.collidedAt) / TIME_TO_DISAPEAR_AFTER_COLLISION;
         var y = self.positionY + (self.gameHeight - self.positionY) * scaleUp;
         self.ctx.fillStyle = 'rgba(0,0,0,' + (1 - scaleUp) + ')';
-        self.ctx.fillRect(self.positionX, y, self.size, self.size);
+        self.ctx.drawImage(self.image, self.positionX, y, self.size, self.size);
 
         if (scaleUp > TIME_TO_DISAPEAR_AFTER_COLLISION) {
             self.done = true;
@@ -49,8 +51,8 @@ Enemy.prototype.draw = function () {
         
     }
     else {
-        self.image = new Image();
-        self.image.src = './img/peter.png';
+        // self.image = new Image();
+        // self.image.src = './img/peter.png';
         self.ctx.drawImage(self.image, self.positionX, self.positionY, self.size, self.size);
         
         // self.ctx.fillStyle = 'black';

@@ -11,7 +11,7 @@ function Game(mainElement) {
     self.height = window.innerHeight;
     self.gravity = 0.15;
 
-    self.numberEnemies = 1;
+    self.numberEnemies = 5;
     self.enemies = []
     self.numberEnemiesCollided = [];
 
