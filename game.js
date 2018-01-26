@@ -11,11 +11,11 @@ function Game(mainElement) {
     self.height = window.innerHeight;
     self.gravity = 0.15;
 
-    self.numberEnemies = 2;
+    self.numberEnemies = 1;
     self.enemies = []
     self.numberEnemiesCollided = [];
 
-    self.chickenLives = 5;
+    self.chickenLives = self.numberEnemies + 2;
     self.chickeEnemyCollision = false;
 
     self.onEnded;
@@ -27,6 +27,7 @@ function Game(mainElement) {
     self.canvasElement.height = self.height;
     self.canvasElement.setAttribute('id', 'canvasElement');
     mainElement.appendChild(self.canvasElement);
+    
 
     self.ctx = self.canvasElement.getContext('2d');
 
@@ -72,6 +73,8 @@ function Game(mainElement) {
         self.drawEnemies();
         self.checkIfCollision();
         self.purgeEnemies();
+        self.chickenLives;
+
 
         // self.resultOfTrow();
 
@@ -117,12 +120,14 @@ Game.prototype.checkIfCollision = function () {
                 self.enemyIndexCollided = i;
                 self.enemies[i].setCollided();
                 self.resultOfTrow();
+                self.score += 10;
 
             } else if (collisionCondition3) {
                 console.log('its fucking colliding with the flooor bro!!!');
                 self.chicken.status = 'finished';
                 self.chicken.chickeEnemyCollision = false;
                 self.resultOfTrow();
+                self.score -= 5;
 
             } else {
                 console.log('at least its logging')

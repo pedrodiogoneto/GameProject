@@ -66,7 +66,7 @@ Chicken.prototype.updateVelocityByAngle = function () {
 Chicken.prototype.trowingAngleHigher = function() {
     var self = this;
 
-    self.angle += 0.1;
+    self.angle += 0.05;
     self.updateVelocityByAngle();
 
     console.log('New Angle: ' + self.angle);
@@ -75,7 +75,7 @@ Chicken.prototype.trowingAngleHigher = function() {
 Chicken.prototype.trowingAngleLower = function() {
     var self = this;
 
-    self.angle -= 0.1;
+    self.angle -= 0.05;
     self.updateVelocityByAngle();
     
     console.log('New Angle: ' + self.angle);
@@ -111,7 +111,7 @@ Chicken.prototype.draw = function () {
         self.ctx.lineWidth="5";
         self.ctx.strokeStyle="black"; 
         self.ctx.moveTo(self.positionX + self.size/2, self.positionY + self.size/2);
-        self.ctx.lineTo(self.positionX + (self.velocityX * Math.cos(self.angle))*10 , self.positionY - (self.velocityY * Math.sin(self.angle))*(-1)*10);
+        self.ctx.lineTo(self.positionX + (self.velocityX * Math.cos(self.angle))*5 , self.positionY - (self.velocityY * Math.sin(self.angle))*(-1)*5);
         self.ctx.stroke(); 
     }
     else if (self.status === 'air') {
@@ -132,9 +132,13 @@ Chicken.prototype.draw = function () {
             self.ctx.fillRect(x, y, size, size);
         }
     }
+    self.image = new Image();
+    self.image.src = './img/chicken.png';
+    self.ctx.drawImage(self.image, self.positionX, self.positionY, self.size, self.size);
 
-    self.ctx.fillStyle = 'black';
-    self.ctx.fillRect(self.positionX, self.positionY, self.size, self.size);
+    // //auxiliar black square draw
+    // self.ctx.fillStyle = 'black';
+    // self.ctx.fillRect(self.positionX, self.positionY, self.size, self.size);
 }
 
 
@@ -143,5 +147,10 @@ Chicken.prototype.setChickeEnemyCollision = function () {
     self.chickeEnemyCollision = false;
 }
 
-
-
+// Chicken.prototype.drawPlayerChicken = function () {
+//     var self = this;
+//     var chicken = new Image(self.size,self.size);
+//     self.image.onload = drawImageActualSize;
+//     self.chicken.src = './img/chicken.png';
+//     self.ctx.drawImage(self, 0, 0)
+// }

@@ -14,6 +14,7 @@ function main() {
   var playerName;
   var handleStartClick = function () {
       destroySplash();
+      // getPlayerName();
       buildGame();
   };
     
@@ -25,17 +26,32 @@ function main() {
     splashElement = document.createElement('div');
     splashElement.setAttribute('id', 'splash');
 
+    var containerExt = document.createElement('div');
+    containerExt.setAttribute('id', 'containerExt');
+    splashElement.appendChild(containerExt);
+
+    var containerTitle = document.createElement('div');
+    containerTitle.setAttribute('id', 'containerTitle');
+    containerExt.appendChild(containerTitle);
+
+    var containerButton = document.createElement('div');
+    containerButton.setAttribute('id', 'containerButton');
+    containerExt.appendChild(containerButton);
+
     var title = document.createElement('h1');
-    title.innerText = 'A REALLY COOL NAME';
-    splashElement.appendChild(title);
+    title.setAttribute('id', 'title');
+    title.innerText = 'CHICKEN VENDETTA';
+    containerTitle.appendChild(title);
     
-    playerName = document.createElement('input');
-    playerName.setAttribute('value', 'USER NAME');
-    splashElement.appendChild(playerName);
+    // playerName = document.createElement('input');
+    // playerName.setAttribute('value', 'USER NAME');
+    // playerName.setAttribute('id', 'playername');
+    // splashElement.appendChild(playerName);
     
     startGameButton = document.createElement('button');
     startGameButton.innerText = 'START GAME';
-    splashElement.appendChild(startGameButton);
+    containerButton.appendChild(startGameButton);
+    startGameButton.setAttribute('id','startGameButton');
 
     // apppend to site-main
     mainElement.appendChild(splashElement);
@@ -43,6 +59,10 @@ function main() {
     // bind click on start play button
     startGameButton.addEventListener('click', handleStartClick);
   }
+
+  // function getPlayerName () {
+  //   playerName = document.getElementById('playername').value;
+  // }
 
   function destroySplash() {
         
@@ -58,6 +78,7 @@ function main() {
 
   function buildGame() {
     gameStage = 'game';
+    // gameLevel = null;
     game = new Game(mainElement);
 
 
@@ -85,7 +106,7 @@ function main() {
     var handlePlayAgainClick = function () {
       destroyGameOver();
       buildGame();
-    };
+    }; 
 
     var handlePlayAgainClickWinner = function () {
       destroyGameWin();
@@ -111,20 +132,28 @@ function main() {
       playAgainButton.innerText = 'PLAY AGAIN';
       gameOverElement.appendChild(playAgainButton);
 
+
       donateButton = document.createElement('button');
       donateButton.innerText = 'DONATE';
+      donateButton.setAttribute('class', 'btn');
       gameOverElement.appendChild(donateButton);
 
       // apppend to site-main
-      mainElement.appendChild(gameOverElement);
+      mainElement.appendChild(gameOverElement);s
 
       // bind click on start play button
       playAgainButton.addEventListener('click', handlePlayAgainClick);
+    
+
+      // bind click on donate button
+      donateButton.addEventListener('click', handleDonateClick);
     }
 
     function destroyGameOver() {
       // unbind click on start play button
       playAgainButton.removeEventListener('click', handlePlayAgainClick);
+      // unbind click on donate button
+      donateButton.removeEventListener('click', handleDonateClick);
       // remove gameOver from dom
       gameOverElement.remove();
     }
@@ -135,22 +164,39 @@ function main() {
       // create dom elements
       gameWinElement = document.createElement('div');
       gameWinElement.setAttribute('id', 'game-win');
+      gameWinElement.setAttribute('id', 'splash');
+
+      var containerExt = document.createElement('div');
+      containerExt.setAttribute('id', 'containerExt');
+      gameWinElement.appendChild(containerExt);
+
+      var containerTitle = document.createElement('div');
+      containerTitle.setAttribute('id', 'containerTitle');
+      containerExt.appendChild(containerTitle);
+
+      var containerButton = document.createElement('div');
+      containerButton.setAttribute('id', 'containerButton');
+      containerExt.appendChild(containerButton);
 
       var title = document.createElement('h1');
-      title.innerText = 'WINNER!!! Congratulations!!!';
-      gameWinElement.appendChild(title);
+      title.innerText = 'WINNER!!! ';
+      containerTitle.appendChild(title);
+      title.setAttribute('id','title');
 
-      var userScore = document.createElement('h2');
-      userScore.innerText = playerName + ' Score: ' + game.score;
-      gameWinElement.appendChild(userScore);
+      // var userScore = document.createElement('h2');
+      // userScore.innerText = playerName + ' Score: ' + game.score;
+      // containerButton.appendChild(userScore);
 
       playAgainButtonWinner = document.createElement('button');
       playAgainButtonWinner.innerText = 'PLAY AGAIN';
-      gameWinElement.appendChild(playAgainButtonWinner);
+      containerButton.appendChild(playAgainButtonWinner);
+      playAgainButtonWinner.setAttribute('id','startGameButton');
 
       donateButton = document.createElement('button');
       donateButton.innerText = 'DONATE';
-      gameWinElement.appendChild(donateButton);
+      containerButton.appendChild(donateButton);
+      donateButton.setAttribute('id','startGameButton');
+
 
       // apppend to site-main
       mainElement.appendChild(gameWinElement);
