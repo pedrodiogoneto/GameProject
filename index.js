@@ -7,7 +7,7 @@ function main() {
   var gameStage;
   var game;
 
-    // _____ Splash Screen
+  // _____ Splash Screen
 
   var splashElement;
   var startGameButton;
@@ -38,6 +38,7 @@ function main() {
     containerButton.setAttribute('id', 'containerButton');
     containerExt.appendChild(containerButton);
 
+    // @@TODO - TO HAVE INSTRUCTIONS ON SPLASHSCREEN
     // var containerinstructions = document.createElement('div');
     // containerinstructions.setAttribute('id', 'containerinstructions');
     // containerExt.appendChild(containerinstructions);
@@ -51,6 +52,7 @@ function main() {
     title.innerText = 'CHICKEN VENDETTA';
     containerTitle.appendChild(title);
     
+    // @@TODO - TO HAVE THE PLAYER'S NAME INPUT
     // playerName = document.createElement('input');
     // playerName.setAttribute('value', 'USER NAME');
     // playerName.setAttribute('id', 'playername');
@@ -166,14 +168,9 @@ function main() {
       // bind click on start play button
       playAgainButton.addEventListener('click', handlePlayAgainClick);
     
-
       //   // bind click on donate button
       //   donateButton.addEventListener('click', handleDonateClick);
-      
-
-
-  
-  }
+    }
 
     function destroyGameOver() {
       // unbind click on start play button
@@ -239,7 +236,9 @@ function main() {
     }
 
   }
-    buildSplash();
+    
+  buildSplash();
   
 }
+
 window.onload = main;

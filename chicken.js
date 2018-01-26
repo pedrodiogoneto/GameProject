@@ -142,6 +142,8 @@ Chicken.prototype.draw = function () {
     // self.ctx.fillStyle = 'black';
     // self.ctx.fillRect(self.positionX, self.positionY, self.size, self.size);
 
+
+    // @@TODO - FUNCTION TO CHANGE THE POWER LINE
     // function powerLineColor () {
     //     var self = this;
     //     self.valueX = self.positionX + (self.velocityX * Math.cos(self.angle))*5;
@@ -181,11 +183,3 @@ Chicken.prototype.setChickeEnemyCollision = function () {
     var self = this;
     self.chickeEnemyCollision = false;
 }
-
-// Chicken.prototype.drawPlayerChicken = function () {
-//     var self = this;
-//     var chicken = new Image(self.size,self.size);
-//     self.image.onload = drawImageActualSize;
-//     self.chicken.src = './img/chicken.png';
-//     self.ctx.drawImage(self, 0, 0)
-// }

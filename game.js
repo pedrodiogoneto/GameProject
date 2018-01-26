@@ -79,19 +79,15 @@ function Game(mainElement) {
         self.purgeEnemies();
         self.chickenLives;
 
-
-        // self.resultOfTrow();
-
-
         if (!self.finished) {
             window.requestAnimationFrame(doFrame);
         }
         
     }
+
     window.requestAnimationFrame(doFrame);
 
 }
-
 
 Game.prototype.checkIfCollision = function () {
     var self = this;   
@@ -140,18 +136,10 @@ Game.prototype.checkIfCollision = function () {
     }
 }
 
-Game.prototype.purgeEnemies = function () {
-    var self = this;
-
-    self.enemies = self.enemies.filter(function (enemy) {
-        return !enemy.done;
-    });
-};  
-
 Game.prototype.resultOfTrow = function () {
     var self = this;
     self.updateNumberEnemiesCollided();
-
+    
     if (self.chicken.status === 'finished' && self.chickenLives > 0 && (self.numberEnemiesCollided.length === self.enemies.length)) {
         self.onWinned();
     } else if (self.chicken.status === 'finished' && self.chickenLives > 0 && self.numberEnemiesCollided.length < self.enemies.length) {
@@ -163,12 +151,32 @@ Game.prototype.resultOfTrow = function () {
     }
 }
 
+Game.prototype.purgeEnemies = function () {
+    var self = this;
+
+    self.enemies = self.enemies.filter(function (enemy) {
+        return !enemy.done;
+    });
+};
+
 Game.prototype.drawEnemies = function () {
     var self = this;
     self.enemies.forEach(function(enemy){
         enemy.draw()
     });
 }
+
+Game.prototype.updateNumberEnemiesCollided = function () {
+    var self = this;
+
+    for (var i=0;i<self.enemies.length;i++) {
+        if (self.enemies[i].collided) {
+            if (self.numberEnemiesCollided.indexOf(i)<0) {
+                self.numberEnemiesCollided.push(i);
+            }
+        }
+    }
+};
 
 Game.prototype.destroy = function () {
     var self = this;
@@ -192,14 +200,3 @@ Game.prototype.onGameWin = function (callback) {
     self.onWinned = callback;
 };
 
-Game.prototype.updateNumberEnemiesCollided = function () {
-    var self = this;
-
-    for (var i=0;i<self.enemies.length;i++) {
-        if (self.enemies[i].collided) {
-            if (self.numberEnemiesCollided.indexOf(i)<0) {
-                self.numberEnemiesCollided.push(i);
-            }
-        }
-    }
-};
